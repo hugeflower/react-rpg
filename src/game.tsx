@@ -1,9 +1,9 @@
 import { useDrop } from "react-dnd";
 import { useEffect, useState } from "react"
 import { componentType } from "./componentType";
-import Pillow from "./pillow.tsx";
-import { newDeck } from "./cardCollection.js";
-import Deck from "./deck.js"
+import Pillow from "./pillow";
+import { newDeck } from "./cardCollection";
+import Deck from "./deck"
 import React from "react";
 
 export const Game = ({gameState}) => {

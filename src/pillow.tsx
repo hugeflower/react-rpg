@@ -1,5 +1,5 @@
 import React from "react";
-import Deck from "./deck.js";
+import Deck from "./deck";
 import pillow from './pillow.jpg'
 
 export default function Pillow({cards}) {

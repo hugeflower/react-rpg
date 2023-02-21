@@ -1,3 +1,4 @@
+import { CardInfos } from "./cardInfos";
 import { cardNumbers, getCardNumber } from "./cardNumbers";
 import { cardSuites, getCardSuite } from "./cardSuites";
 
@@ -78,8 +79,8 @@ export function newDeck() {
     return completeDeck;
 }
 
-export function getCardFromValues(suite, number) {
-    const cardSuite = getCardSuite(suite)
-    const cardNumber = getCardNumber(number)
+export function getCardFromValues(cardInfos : CardInfos) : any {
+    const cardSuite = getCardSuite(cardInfos.suite)
+    const cardNumber = getCardNumber(cardInfos.number)
     return cardCollection.get(cardSuite).get(cardNumber)
 }

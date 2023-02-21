@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Game } from "./game.js";
-import { GameState } from "./gameState.tsx";
+import { Game } from "./game";
+import { GameState } from "./gameState";
 
 export default function App() {
     const game = useMemo(() => new GameState(), [])
