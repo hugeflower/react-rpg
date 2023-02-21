@@ -1,7 +1,8 @@
-import { cardNumbers } from "./cardNumbers"
+import { CardInfos } from "./cardInfos"
+import { cardNumbers } from "./cardNumbers.tsx"
 
 export class GameState {
-    cardOnPillow = []
+    cardsOnPillow : CardInfos[] = []
     observers: any[] = []
 
     observe(o: any) {
@@ -10,25 +11,26 @@ export class GameState {
 
     }
 
-    sendCard(card) {
+    sendCard(card : CardInfos) {
+        console.log(card)
         if (card) {
-            if (this.isFace(card[1])) {
-                this.cardOnPillow.splice(0, 2)
+            if (this.isFace(card)) {
+                this.cardsOnPillow.splice(0, 2)
             } else {
-                this.cardOnPillow = [card, ...this.cardOnPillow]
+                this.cardsOnPillow = [card, ...this.cardsOnPillow]
             }
             this.emitChange()
         }
     }
 
-    isFace(cardNumber) {
-        if (cardNumber === cardNumbers.JACK || cardNumber === cardNumbers.QUEEN || cardNumber === cardNumbers.KING || cardNumber === cardNumbers.BLACK || cardNumber === cardNumbers.WHITE) {
+    isFace(card : CardInfos) : boolean {
+        if (card.number === cardNumbers.JACK || card.number === cardNumbers.QUEEN || card.number === cardNumbers.KING || card.number === cardNumbers.BLACK || card.number === cardNumbers.WHITE) {
             return true
         } else return false
     }
 
     emitChange() {
-        const cardSent = this.cardOnPillow
+        const cardSent = this.cardsOnPillow
         this.observers.forEach((o) => o && o(cardSent))
     }
 }
