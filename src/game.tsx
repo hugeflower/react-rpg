@@ -1,18 +1,19 @@
 import { useDrop } from "react-dnd";
 import { useEffect, useState } from "react"
-import { componentType } from "./componentType";
 import Pillow from "./pillow.tsx";
-import { newDeck } from "./cardCollection.js";
-import Deck from "./deck.js"
+import { componentType } from "./Types/cardType.tsx"
+import { newDeck } from "./cardCollection.tsx";
+import { Deck } from "./deck.tsx"
 import React from "react";
+import { CardInfos } from "./cardInfos.tsx";
 
 export const Game = ({gameState}) => {
-    const [cardOnPillow, setCardOnPillow] = useState(gameState.cardOnPillow)
-    const [deck] = useState(newDeck())
-    const [discard, setDiscard] = useState([])
+    const [cardOnPillow, setCardOnPillow] = useState<CardInfos[]>(gameState.cardsOnPillow)
+    const [deck] = useState<CardInfos[]>(newDeck())
+    const [discard, setDiscard] = useState<CardInfos[]>([])
     useEffect(() => gameState.observe(setCardOnPillow), [gameState])
 
-    function drawCard () {
+    function drawCard () : void {
         const randomCard = Math.floor(Math.random() * deck.length)
         const cardDrawn = deck.at(randomCard)
         const indexToDelete = deck.indexOf(cardDrawn)

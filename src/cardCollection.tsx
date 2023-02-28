@@ -1,5 +1,6 @@
-import { cardNumbers, getCardNumber } from "./cardNumbers";
-import { cardSuites, getCardSuite } from "./cardSuites";
+import { CardInfos, newCardInfos } from "./Types/cardInfos.tsx";
+import { cardNumbers, getCardNumber } from "./Types/cardNumbers.tsx";
+import { cardSuites, getCardSuite } from "./Types/cardSuites.tsx";
 
 export const cardCollection = new Map([
     [cardSuites.SPADES, new Map([
@@ -68,18 +69,18 @@ export const cardCollection = new Map([
     ])]
 ])
 
-export function newDeck() {
-    const completeDeck = []
+export function newDeck() : CardInfos[] {
+    const completeDeck : CardInfos[] = []
     cardCollection.forEach((suite, keySuite) => {
         suite.forEach((value, key) => {
-            completeDeck.push([keySuite, key])
+            completeDeck.push(newCardInfos(keySuite, key))
         })
     })
     return completeDeck;
 }
 
-export function getCardFromValues(suite, number) {
-    const cardSuite = getCardSuite(suite)
-    const cardNumber = getCardNumber(number)
+export function getCardFromValues(cardInfos : CardInfos) : any {
+    const cardSuite = getCardSuite(cardInfos.suite)
+    const cardNumber = getCardNumber(cardInfos.number)
     return cardCollection.get(cardSuite).get(cardNumber)
 }
