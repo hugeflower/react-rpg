@@ -1,10 +1,10 @@
 
-import { getCardFromValues } from "./cardCollection.tsx";
-import { cardSuites } from "./cardSuites.tsx";
-import { componentType } from "./componentType.tsx";
+import { getCardFromValues } from "../cardCollection.tsx";
+import { cardSuites } from "../Types/cardSuites.tsx";
+import { componentType } from "../Types/cardType.tsx";
 import { useDrag } from "react-dnd";
 import React from "react";
-import { CardInfos } from "./cardInfos.tsx";
+import { CardInfos } from "../Types/cardInfos.tsx";
 
 function Card(card : CardInfos) {
     const [{isDragging}, drag] = useDrag(() => ({

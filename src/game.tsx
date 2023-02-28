@@ -1,7 +1,7 @@
 import { useDrop } from "react-dnd";
 import { useEffect, useState } from "react"
-import { componentType } from "./componentType.tsx";
 import Pillow from "./pillow.tsx";
+import { componentType } from "./Types/cardType.tsx"
 import { newDeck } from "./cardCollection.tsx";
 import { Deck } from "./deck.tsx"
 import React from "react";

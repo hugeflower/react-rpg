@@ -1,5 +1,5 @@
-import { CardInfos } from "./cardInfos"
-import { cardNumbers } from "./cardNumbers.tsx"
+import { CardInfos } from "./Types/cardInfos"
+import { cardNumbers } from "./Types/cardNumbers.tsx"
 
 export class GameState {
     cardsOnPillow : CardInfos[] = []

@@ -1,6 +1,6 @@
 import React from "react";
-import Card from "./card.tsx";
-import { CardInfos } from "./cardInfos.tsx";
+import Card from "./BaseComponents/card.tsx";
+import { CardInfos } from "./Types/cardInfos.tsx";
 
 export const Deck = ({cards, onClick, hidden}) => {
     const cardOnTop : CardInfos = cards[0]

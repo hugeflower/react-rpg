@@ -1,6 +1,6 @@
-import { CardInfos, newCardInfos } from "./cardInfos.tsx";
-import { cardNumbers, getCardNumber } from "./cardNumbers.tsx";
-import { cardSuites, getCardSuite } from "./cardSuites.tsx";
+import { CardInfos, newCardInfos } from "./Types/cardInfos.tsx";
+import { cardNumbers, getCardNumber } from "./Types/cardNumbers.tsx";
+import { cardSuites, getCardSuite } from "./Types/cardSuites.tsx";
 
 export const cardCollection = new Map([
     [cardSuites.SPADES, new Map([

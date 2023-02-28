@@ -1,6 +1,6 @@
 import React from "react";
 import { Deck } from "./deck.tsx";
-import pillow from './pillow.jpg'
+import pillow from "./Images/pillow.jpg"
 
 export default function Pillow({cards}) {
     return (
