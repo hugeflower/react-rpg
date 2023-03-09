@@ -1,6 +1,6 @@
 # Adaptation du projet de jeu de rôle Dernière Nuit
 
-Ce projet React (avec TypeScript) est une adaptation du jeu de rôle, dont les règles sont accessibles dans le PDF Dernière-Nuit.pdf (à la racine du projet)
+Ce projet React (avec TypeScript) est une adaptation d'un jeu de rôle, dont les règles sont accessibles dans le PDF Dernière-Nuit.pdf (à la racine du projet)
 
 ## Scripts disponibles
 
