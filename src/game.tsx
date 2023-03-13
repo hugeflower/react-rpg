@@ -11,6 +11,7 @@ export const Game = ({gameState}) => {
     const [cardOnPillow, setCardOnPillow] = useState<CardInfos[]>(gameState.cardsOnPillow)
     const [deck] = useState<CardInfos[]>(newDeck())
     const [discard, setDiscard] = useState<CardInfos[]>([])
+    const [pillows, setPillows] = useState([])
     useEffect(() => gameState.observe(setCardOnPillow), [gameState])
 
     function drawCard () : void {
@@ -24,6 +25,11 @@ export const Game = ({gameState}) => {
     function dropFirstCardFromDiscard() {
         const cardToDrop = discard.splice(0, 1)[0]
         gameState.sendCard(cardToDrop)
+    }
+
+    function addPillow() {
+
+        setPillows([1, ...pillows])
     }
 
     const [, drop] = useDrop(() => ({
@@ -43,6 +49,10 @@ export const Game = ({gameState}) => {
             <div ref={drop}>
                 <Pillow cards={cardOnPillow} />
             </div>
+            {pillows.map( pillow => {
+                return <Pillow cards={cardOnPillow}/>
+            })}
+            <button onClick={addPillow}>Add pillow</button>
         </div>
     )
 }
