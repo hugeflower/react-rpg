@@ -1,10 +1,18 @@
-import React, { useMemo } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { Game } from "./game.tsx";
-import { GameState } from "./gameState.tsx";
+import {useMemo} from 'react'
+import './App.css'
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import {GameState} from "./gameState.tsx";
+import Game from "./Game.tsx";
 
-export default function App() {
+function App() {
     const game = useMemo(() => new GameState(), [])
-    return <DndProvider backend={HTML5Backend}><Game gameState={game}/></DndProvider>
+
+  return (
+    <>
+        <DndProvider backend={HTML5Backend}><Game gameState={game}/></DndProvider>
+    </>
+  )
 }
+
+export default App

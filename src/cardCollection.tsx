@@ -1,4 +1,4 @@
-import { CardInfos, newCardInfos } from "./Types/cardInfos.tsx";
+import {type CardInfos, newCardInfos } from "./Types/cardInfos.tsx";
 import { cardNumbers, getCardNumber } from "./Types/cardNumbers.tsx";
 import { cardSuites, getCardSuite } from "./Types/cardSuites.tsx";
 
@@ -72,15 +72,16 @@ export const cardCollection = new Map([
 export function newDeck() : CardInfos[] {
     const completeDeck : CardInfos[] = []
     cardCollection.forEach((suite, keySuite) => {
-        suite.forEach((value, key) => {
+        suite.forEach((_value, key) => {
             completeDeck.push(newCardInfos(keySuite, key))
         })
     })
     return completeDeck;
 }
 
-export function getCardFromValues(cardInfos : CardInfos) : any {
+export function getCardFromValues(cardInfos : CardInfos) : string {
     const cardSuite = getCardSuite(cardInfos.suite)
     const cardNumber = getCardNumber(cardInfos.number)
-    return cardCollection.get(cardSuite).get(cardNumber)
+    const card = cardCollection.get(cardSuite)?.get(cardNumber)
+    return card || "";
 }
