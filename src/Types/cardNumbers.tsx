@@ -16,8 +16,8 @@ export const cardNumbers = {
     BLACK: "black"
 }
 
-export function getCardNumber(string) {
-    switch (string) {
+export function getCardNumber(number:string) {
+    switch (number) {
         case "two" : return cardNumbers.TWO
         case "three" : return cardNumbers.THREE
         case "four" : return cardNumbers.FOUR

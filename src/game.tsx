@@ -1,20 +1,13 @@
-import {useDrop} from "react-dnd";
-import {useRef, useState} from "react"
+import {useState} from "react"
 import Pillow from "./Pillow.tsx";
-import {componentType} from "./Types/cardType.tsx"
 import {newDeck} from "./cardCollection.tsx";
 import type {CardInfos} from "./Types/cardInfos.tsx";
-import  {type GameState} from "./gameState.tsx";
 import Deck from "./Deck.tsx";
 
-interface GameProps {
-    gameState: GameState
-}
-
-function Game(props: GameProps) {
-    const cardRef = useRef<HTMLDivElement>(null);
+function Game() {
     const [deck] = useState<CardInfos[]>(newDeck())
     const [discard, setDiscard] = useState<CardInfos[]>([])
+    const [pillowCount, setPillowCount] = useState<number>(1)
 
     function drawCard(): void {
         const indexToDelete = Math.floor(Math.random() * deck.length)
@@ -22,30 +15,37 @@ function Game(props: GameProps) {
         setDiscard([cardToDiscard, ...discard])
     }
 
-    function dropFirstCardFromDiscard() {
-        const cardToDrop = discard.splice(0, 1)[0]
-        props.gameState.sendCard(cardToDrop)
+    function takeFirstCardFromDiscard(): CardInfos | null {
+        if (discard.length === 0) return null
+
+        const newDiscard = [...discard];
+        const cardToDrop = newDiscard.shift()!;
+        setDiscard(newDiscard);
+
+        return cardToDrop;
     }
 
-    const [, drop] = useDrop(() => ({
-            accept: componentType.CARD,
-            drop: () => dropFirstCardFromDiscard(),
-            collect: (monitor) => ({
-                isOver: monitor.isOver()
-            })
-        }),
-        [discard]
-    )
+    function addPillow(): void {
+        setPillowCount(prevCount => prevCount + 1);
+    }
 
-    drop(cardRef)
+    function removePillow(): void {
+        if (pillowCount > 1) {
+            setPillowCount(prevCount => prevCount - 1);
+        }
+    }
 
     return (
         <div>
             <Deck cards={deck} onClick={drawCard} hidden={true}/>
             <Deck cards={discard} onClick={() => {
             }} hidden={false}/>
-            <div ref={cardRef}>
-                <Pillow cards={props.gameState.cardsOnPillow}/>
+            <div style={{ display: "flex", gap: "20px", marginTop: "20px", flexWrap: "wrap" }}>
+                {Array.from({ length: pillowCount }).map((_, index) => (
+                    <Pillow key={index} cardReceived={takeFirstCardFromDiscard} />
+                ))}
+                <button onClick={addPillow}>Ajouter un oreiller</button>
+                <button onClick={removePillow}>Enlever un oreiller</button>
             </div>
         </div>
     )
