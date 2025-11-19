@@ -1,6 +1,6 @@
 import pillow from "./Images/pillow.jpg"
 import type {CardInfos} from "./Types/cardInfos.tsx";
-import Deck from "./Deck.tsx";
+import Deck from "./deck.tsx";
 import {useRef, useState} from "react";
 import {cardNumbers} from "./Types/cardNumbers.tsx";
 import {useDrop} from "react-dnd";

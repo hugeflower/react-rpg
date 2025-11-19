@@ -6,8 +6,8 @@ export const cardSuites = {
     JOKERS: 'jokers'
 }
 
-export function getCardSuite(string) {
-    switch (string) {
+export function getCardSuite(suite: string) {
+    switch (suite) {
         case 'spades': return cardSuites.SPADES
         case 'hearts' : return cardSuites.HEARTS
         case 'diamonds' : return cardSuites.DIAMONDS

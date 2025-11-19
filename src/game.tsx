@@ -1,8 +1,8 @@
 import {useState} from "react"
-import Pillow from "./Pillow.tsx";
+import Pillow from "./pillow.tsx";
 import {newDeck} from "./cardCollection.tsx";
 import type {CardInfos} from "./Types/cardInfos.tsx";
-import Deck from "./Deck.tsx";
+import Deck from "./deck.tsx";
 import bedframe from "./Images/bedframe.jpg";
 
 function Game() {
