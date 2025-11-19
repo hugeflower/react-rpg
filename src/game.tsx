@@ -26,6 +26,10 @@ function Game() {
         return cardToDrop;
     }
 
+    function returnCardToDiscard(card: CardInfos): void {
+        setDiscard(prevDiscard => [card, ...prevDiscard])
+    }
+
     function addPillow(): void {
         setPillowCount(prevCount => prevCount + 1);
     }
@@ -78,7 +82,11 @@ function Game() {
                     }}
                 >
                     {Array.from({ length: pillowCount }).map((_, index) => (
-                        <Pillow key={index} cardReceived={takeFirstCardFromDiscard} />
+                        <Pillow
+                            key={index}
+                            cardReceived={takeFirstCardFromDiscard}
+                            returnCard={returnCardToDiscard}
+                        />
                     ))}
                 </div>
             </div>

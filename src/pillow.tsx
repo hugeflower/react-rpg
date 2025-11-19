@@ -8,6 +8,7 @@ import {componentType} from "./Types/cardType.tsx";
 
 interface PillowProps {
     cardReceived: () => CardInfos | null
+    returnCard: (cardInfos: CardInfos) => void
 }
 
 function Pillow(props: PillowProps) {
@@ -22,6 +23,18 @@ function Pillow(props: PillowProps) {
             || card.number === cardNumbers.WHITE;
     }
 
+    function sameCardNumber(topCard: CardInfos, newCard: CardInfos) {
+        return topCard.number === newCard.number
+    }
+
+    function sameCardSuite(topCard: CardInfos, newCard: CardInfos) {
+        return topCard.suite === newCard.suite
+    }
+
+    function validCardChain(topCard: CardInfos, newCard: CardInfos) {
+        return sameCardNumber(topCard, newCard) || sameCardSuite(topCard, newCard);
+    }
+
     function receiveCard() {
         const cardReceived = props.cardReceived();
         if (!cardReceived) return;
@@ -29,7 +42,14 @@ function Pillow(props: PillowProps) {
         if (isFace(cardReceived)) {
             setCards(prevCards => prevCards.slice(2))
         } else {
-            setCards(prevCards => [cardReceived, ...prevCards])
+            if (cards.length === 0) {
+                setCards([cardReceived])
+                return
+            } else if (validCardChain(cards.at(0) as CardInfos, cardReceived)) {
+                setCards(prevCards => [cardReceived, ...prevCards])
+                return
+            } else console.error("Invalid card");
+            props.returnCard(cardReceived);
         }
     }
 
