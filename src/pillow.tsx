@@ -80,7 +80,7 @@ function Pillow(props: PillowProps) {
                 left: "25px",
                 padding: "7px"
             }}>
-                {cards.length > 0 && <Deck cards={cards} onClick={() => {
+                {cards.length > 0 && <Deck draggable={false} cards={cards} onClick={() => {
                 }} hidden={false}/>}
             </div>
         </div>

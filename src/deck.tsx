@@ -6,6 +6,7 @@ interface DeckProps {
     cards: CardInfos[],
     onClick: () => void,
     hidden: boolean,
+    draggable: boolean
 }
 
 function Deck(props:DeckProps) {
@@ -18,7 +19,7 @@ function Deck(props:DeckProps) {
                         🂠
                     </div>
                     :
-                    <Card {...cardOnTop}/>
+                    <Card card={cardOnTop} draggable={props.draggable}/>
                 }
                 <span style={{marginTop: "-20px"}}>{props.cards.length}</span>
             </div>)

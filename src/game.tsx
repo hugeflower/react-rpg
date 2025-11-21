@@ -64,9 +64,9 @@ function Game() {
                 }}
             >
                 <div style={{marginBottom: "5%"}}>
-                    <Deck cards={deck} onClick={drawCard} hidden={true}/>
+                    <Deck cards={deck} onClick={drawCard} hidden={true} draggable={false}/>
                     <Deck cards={discard} onClick={() => {
-                    }} hidden={false}/>
+                    }} hidden={false} draggable={true}/>
                 </div>
                 <button onClick={addPillow}>Ajouter un oreiller</button>
                 <button onClick={removePillow}>Enlever un oreiller</button>

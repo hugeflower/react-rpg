@@ -4,9 +4,15 @@ import { componentType } from "../Types/cardType.tsx";
 import { useDrag } from "react-dnd";
 import type {CardInfos} from "../Types/cardInfos.tsx";
 
-function Card(card : CardInfos) {
+interface CardProps {
+    card: CardInfos;
+    draggable: boolean;
+}
+
+function Card({card, draggable}: CardProps) {
     const [{isDragging}, drag, preview] = useDrag(() => ({
         item: card,
+        canDrag: draggable,
         type: componentType.CARD,
         collect: (monitor) => ({
             isDragging: monitor.isDragging()
