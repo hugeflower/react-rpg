@@ -41,14 +41,18 @@ function Game() {
     }
 
     return (
-        <div style={{position: "relative", width: "100vw", minHeight: "100vh", overflow: "hidden"}}>
+        <div style={{
+            position: "relative",
+            width: "1000px",
+            height: "1000px",
+            margin: "0 auto",
+            overflow: "hidden"}}>
             <img
                 style={{
                     position: "absolute",
-                    left: "15%",
-                    right: "15%",
+                    left: "20%",
                     alignSelf: "center",
-                    width: "70%",
+                    width: "80%",
                     height: "100%",
                     zIndex: 0,
                     objectFit: "fill",
@@ -59,11 +63,12 @@ function Game() {
             <div
                 style={{
                 position: "absolute",
-                right: "85%",
+                left: "10px",
+                width: "18%",
                 zIndex: 2,
                 }}
             >
-                <div style={{marginBottom: "5%"}}>
+                <div style={{marginBottom: "20px"}}>
                     <Deck cards={deck} onClick={drawCard} hidden={true} draggable={false}/>
                     <Deck cards={discard} onClick={() => {
                     }} hidden={false} draggable={true}/>
@@ -71,14 +76,14 @@ function Game() {
                 <button onClick={addPillow}>Ajouter un oreiller</button>
                 <button onClick={removePillow}>Enlever un oreiller</button>
             </div>
-            <div style={{position: "relative", zIndex: 1, paddingTop: "30%"}}>
+            <div style={{position: "relative", zIndex: 1, paddingTop: "300px", marginLeft: "200px"}}>
                 <div
                     style={{
                         display: "flex",
                         flexWrap: "wrap",
                         alignContent: "center",
                         flexDirection: "column",
-                        maxHeight: "70vh",
+                        maxHeight: "700px",
                     }}
                 >
                     {Array.from({ length: pillowCount }).map((_, index) => (
