@@ -1,13 +1,13 @@
 import {useState} from "react"
 import Pillow from "./pillow.tsx";
-import {newDeck} from "./cardCollection.tsx";
+import {newDeck} from "./CardItems/cardCollection.tsx";
 import type {CardInfos} from "./Types/cardInfos.tsx";
-import Deck from "./deck.tsx";
+import Deck from "./CardItems/deck.tsx";
 import bedframe from "./Images/bedframe.jpg";
-import {Button, Dialog, DialogActions, DialogContentText} from "@mui/material";
+import {DialogContentText} from "@mui/material";
+import TutorialDialogs from "./TutorialComponents/TutorialDialogs.tsx";
 
 function Game() {
-    const [dialogOpen, setDialogOpen] = useState<boolean>(true);
     const [deck] = useState<CardInfos[]>(newDeck())
     const [discard, setDiscard] = useState<CardInfos[]>([])
     const [pillowCount, setPillowCount] = useState<number>(1)
@@ -49,16 +49,7 @@ function Game() {
             height: "1000px",
             margin: "0 auto",
             overflow: "hidden"}}>
-            <Dialog
-            maxWidth={"xl"}
-            open={dialogOpen}
-            onClose={() => setDialogOpen(false)}
-            >
-                <DialogContentText>Bienvenue à votre dernière nuit en couple!</DialogContentText>
-                <DialogActions>
-                    <Button onClick={() => setDialogOpen(false)}>Close</Button>
-                </DialogActions>
-            </Dialog>
+            <TutorialDialogs/>
             <img
                 style={{
                     position: "absolute",

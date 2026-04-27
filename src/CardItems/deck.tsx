@@ -1,5 +1,5 @@
-import Card from "./BaseComponents/Card.tsx";
-import type {CardInfos} from "./Types/cardInfos.tsx";
+import Card from "../BaseComponents/Card.tsx";
+import type {CardInfos} from "../Types/cardInfos.tsx";
 
 
 interface DeckProps {

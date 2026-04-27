@@ -1,4 +1,4 @@
-import { getCardFromValues } from "../cardCollection.tsx";
+import { getCardFromValues } from "../CardItems/cardCollection.tsx";
 import { cardSuites } from "../Types/cardSuites.tsx";
 import { componentType } from "../Types/cardType.tsx";
 import { useDrag } from "react-dnd";
