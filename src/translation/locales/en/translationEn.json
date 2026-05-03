@@ -1,0 +1,12 @@
+{
+  "tutorial": {
+    "firstStep": "\"The uncrossable space of our last night\" is a tabletop role-playing game for one to four players, where players will take on the role of a couple during what could well be their last night together. Between them in the bed stands a physical boundary: a wall of pillows arranged to separate the two bodies. The pillows are also a symbol of the emotional distance between the two characters: the traces of arguments, promises, hopes and disappointments that have marked their life as a couple. Following a triggering event, the lovers will spend the night dwelling on various moments of their relationship, for better or for worse. At the end of the night, they will have to take action and decide: continue their journey together, or end it all?",
+    "secondStep": "Take turns describing an evocative element present in the couple's bedroom that will help define your character or the couple. For example, a tie on the floor might suggest that one of the characters is a professional, while a baby monitor might indicate they are young parents. Repeat until each player has defined three evocative elements. As this is a game that deals with personal relationships and may raise potentially sensitive themes, now is the time to set up your preferred safety tools: X-card, lines and veils, etc. Name your characters. They are not the property of any one player — everyone may embody one, the other, or an NPC as they wish, and switch from one scene to the next.",
+    "nextButton": "Next",
+    "closeButton": "Close"
+  },
+  "sideButtons": {
+    "addPillow": "Add a Pillow",
+    "removePillow": "Remove a Pillow"
+  }
+}

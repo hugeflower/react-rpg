@@ -4,13 +4,14 @@ import {newDeck} from "./CardItems/cardCollection.tsx";
 import type {CardInfos} from "./Types/cardInfos.tsx";
 import Deck from "./CardItems/deck.tsx";
 import bedframe from "./Images/bedframe.jpg";
-import {DialogContentText} from "@mui/material";
 import TutorialDialogs from "./TutorialComponents/TutorialDialogs.tsx";
+import {useTranslation} from "react-i18next";
 
 function Game() {
     const [deck] = useState<CardInfos[]>(newDeck())
     const [discard, setDiscard] = useState<CardInfos[]>([])
     const [pillowCount, setPillowCount] = useState<number>(1)
+    const { t } = useTranslation()
 
     function drawCard(): void {
         const indexToDelete = Math.floor(Math.random() * deck.length)
@@ -76,8 +77,8 @@ function Game() {
                     <Deck cards={discard} onClick={() => {
                     }} hidden={false} draggable={true}/>
                 </div>
-                <button onClick={addPillow}>Ajouter un oreiller</button>
-                <button onClick={removePillow}>Enlever un oreiller</button>
+                <button onClick={addPillow}>{t('sideButtons.addPillow')}</button>
+                <button onClick={removePillow}>{t('sideButtons.removePillow')}</button>
             </div>
             <div style={{position: "relative", zIndex: 1, paddingTop: "300px", marginLeft: "200px"}}>
                 <div

@@ -1,7 +1,7 @@
 enum TutorialStep {
-    firstStep = 0,
-    secondStep = 1,
-    thirdStep = 2,
+    firstStep = 'firstStep',
+    secondStep = 'secondStep',
+    thirdStep = 'thirdStep'
 }
 
 export default TutorialStep
