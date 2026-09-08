@@ -1,16 +1,18 @@
-import {useState} from "react"
-import Pillow from "./pillow.tsx";
+import {useEffect, useRef, useState} from "react"
+import Pillow, {type PillowHandle} from "./pillow.tsx";
 import {newDeck} from "./CardItems/cardCollection.tsx";
 import type {CardInfos} from "./Types/cardInfos.tsx";
 import Deck from "./CardItems/deck.tsx";
 import bedframe from "./Images/bedframe.jpg";
 import TutorialDialogs from "./TutorialComponents/TutorialDialogs.tsx";
 import {useTranslation} from "react-i18next";
+import LanguageToggle from "./translation/TranslationComponents/LanguageToggle.tsx";
 
 function Game() {
     const [deck] = useState<CardInfos[]>(newDeck())
     const [discard, setDiscard] = useState<CardInfos[]>([])
-    const [pillowCount, setPillowCount] = useState<number>(1)
+    const [pillowIds, setPillowIds] = useState<string[]>(() => [crypto.randomUUID()])
+    const pillowRefs = useRef(new Map<string, PillowHandle>())
     const { t } = useTranslation()
 
     function drawCard(): void {
@@ -18,6 +20,10 @@ function Game() {
         const cardToDiscard = deck.splice(indexToDelete, 1)[0]
         setDiscard([cardToDiscard, ...discard])
     }
+
+    useEffect(() => {
+        drawCard()
+    }, [])
 
     function takeFirstCardFromDiscard(): CardInfos | null {
         if (discard.length === 0) return null
@@ -34,13 +40,17 @@ function Game() {
     }
 
     function addPillow(): void {
-        setPillowCount(prevCount => prevCount + 1);
+        setPillowIds(prev => [...prev, crypto.randomUUID()]);
     }
 
     function removePillow(): void {
-        if (pillowCount > 1) {
-            setPillowCount(prevCount => prevCount - 1);
-        }
+        if (pillowIds.length <= 1) return;
+
+        const emptyId = pillowIds.find(id => pillowRefs.current.get(id)?.isEmpty());
+        if (!emptyId) return;
+
+        setPillowIds(prev => prev.filter(id => id !== emptyId));
+        pillowRefs.current.delete(emptyId);
     }
 
     return (
@@ -50,7 +60,8 @@ function Game() {
             height: "1000px",
             margin: "0 auto",
             overflow: "hidden"}}>
-            <TutorialDialogs/>
+            <TutorialDialogs card={discard[0]}/>
+            <LanguageToggle/>
             <img
                 style={{
                     position: "absolute",
@@ -90,9 +101,13 @@ function Game() {
                         maxHeight: "700px",
                     }}
                 >
-                    {Array.from({ length: pillowCount }).map((_, index) => (
+                    {pillowIds.map((id) => (
                         <Pillow
-                            key={index}
+                            key={id}
+                            ref={(el) => {
+                                if (el) pillowRefs.current.set(id, el);
+                                else pillowRefs.current.delete(id);
+                            }}
                             cardReceived={takeFirstCardFromDiscard}
                             returnCard={returnCardToDiscard}
                         />

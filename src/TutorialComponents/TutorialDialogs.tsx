@@ -2,8 +2,14 @@ import {Button, Dialog, DialogActions, DialogContentText} from "@mui/material";
 import {useState} from "react";
 import TutorialStep from "./TutorialStep.tsx";
 import {useTranslation} from "react-i18next";
+import Deck from "../CardItems/deck.tsx";
+import type {CardInfos} from "../Types/cardInfos.tsx";
 
-function TutorialDialogs() {
+interface TutorialDialogsProps {
+    card: CardInfos
+}
+
+function TutorialDialogs(props: TutorialDialogsProps) {
     const [tutorialStep, setTutorialStep] = useState<TutorialStep>(TutorialStep.firstStep);
     const { t } = useTranslation();
 
@@ -28,7 +34,22 @@ function TutorialDialogs() {
             <div style={{ margin: "2rem" }}>
                 <DialogContentText>{t('tutorial.secondStep')}</DialogContentText>
                 <DialogActions>
-                    <Button onClick={() => setTutorialStep(TutorialStep.thirdStep)}>{t('tutorial.closeButton')}</Button>
+                    <Button onClick={() => setTutorialStep(TutorialStep.thirdStep)}>{t('tutorial.nextButton')}</Button>
+                </DialogActions>
+            </div>
+        </Dialog>
+        <Dialog
+            maxWidth={"xl"}
+            open={tutorialStep === TutorialStep.thirdStep}
+            onClose={() => setTutorialStep(TutorialStep.fourthStep)}
+        >
+            <div style={{ margin: "2rem" }}>
+                <DialogContentText>
+                    {t('tutorial.thirdStep')}
+                    <Deck cards={[props.card]} onClick={() => {}} hidden={false} draggable={false}/>
+                </DialogContentText>
+                <DialogActions>
+                    <Button onClick={() => setTutorialStep(TutorialStep.fourthStep)}>{t('tutorial.closeButton')}</Button>
                 </DialogActions>
             </div>
         </Dialog>

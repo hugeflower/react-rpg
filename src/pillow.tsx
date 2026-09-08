@@ -1,7 +1,7 @@
 import pillow from "./Images/pillow.jpg"
 import type {CardInfos} from "./Types/cardInfos.tsx";
 import Deck from "./CardItems/deck.tsx";
-import {useRef, useState} from "react";
+import {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import {cardNumbers} from "./Types/cardNumbers.tsx";
 import {useDrop} from "react-dnd";
 import {componentType} from "./Types/cardType.tsx";
@@ -11,9 +11,17 @@ interface PillowProps {
     returnCard: (cardInfos: CardInfos) => void
 }
 
-function Pillow(props: PillowProps) {
+export interface PillowHandle {
+    isEmpty: () => boolean;
+}
+
+const Pillow = forwardRef<PillowHandle, PillowProps>((props, ref) => {
     const cardRef = useRef<HTMLDivElement>(null);
     const [cards, setCards] = useState<CardInfos[]>([]);
+
+    useImperativeHandle(ref, () => ({
+        isEmpty: () => cards.length === 0
+    }), [cards])
 
     function isFace(card: CardInfos): boolean {
         return card.number === cardNumbers.JACK
@@ -85,6 +93,6 @@ function Pillow(props: PillowProps) {
             </div>
         </div>
     )
-}
+});
 
 export default Pillow;
