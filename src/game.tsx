@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react"
+import {useRef, useState} from "react"
 import Pillow, {type PillowHandle} from "./pillow.tsx";
 import {newDeck} from "./CardItems/cardCollection.tsx";
 import type {CardInfos} from "./Types/cardInfos.tsx";
@@ -7,10 +7,18 @@ import bedframe from "./Images/bedframe.jpg";
 import TutorialDialogs from "./TutorialComponents/TutorialDialogs.tsx";
 import {useTranslation} from "react-i18next";
 import LanguageToggle from "./translation/TranslationComponents/LanguageToggle.tsx";
+import {isFace} from "./Types/cardNumbers.tsx";
 
 function Game() {
     const [deck] = useState<CardInfos[]>(newDeck())
-    const [discard, setDiscard] = useState<CardInfos[]>([])
+    const [discard, setDiscard] = useState<CardInfos[]>(() => {
+        let indexToDraw = Math.floor(Math.random() * deck.length)
+        while (isFace(deck[indexToDraw].number)) {
+            indexToDraw = Math.floor(Math.random() * deck.length)
+        }
+        const [drawnCard] = deck.splice(indexToDraw, 1)
+        return [drawnCard]
+    })
     const [pillowIds, setPillowIds] = useState<string[]>(() => [crypto.randomUUID()])
     const pillowRefs = useRef(new Map<string, PillowHandle>())
     const { t } = useTranslation()
@@ -20,10 +28,6 @@ function Game() {
         const cardToDiscard = deck.splice(indexToDelete, 1)[0]
         setDiscard([cardToDiscard, ...discard])
     }
-
-    useEffect(() => {
-        drawCard()
-    }, [])
 
     function takeFirstCardFromDiscard(): CardInfos | null {
         if (discard.length === 0) return null

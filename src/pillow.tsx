@@ -2,13 +2,14 @@ import pillow from "./Images/pillow.jpg"
 import type {CardInfos} from "./Types/cardInfos.tsx";
 import Deck from "./CardItems/deck.tsx";
 import {forwardRef, useImperativeHandle, useRef, useState} from "react";
-import {cardNumbers} from "./Types/cardNumbers.tsx";
+import {isFace} from "./Types/cardNumbers.tsx";
 import {useDrop} from "react-dnd";
 import {componentType} from "./Types/cardType.tsx";
 
 interface PillowProps {
     cardReceived: () => CardInfos | null
     returnCard: (cardInfos: CardInfos) => void
+    displayCard?: CardInfos
 }
 
 export interface PillowHandle {
@@ -17,19 +18,11 @@ export interface PillowHandle {
 
 const Pillow = forwardRef<PillowHandle, PillowProps>((props, ref) => {
     const cardRef = useRef<HTMLDivElement>(null);
-    const [cards, setCards] = useState<CardInfos[]>([]);
+    const [cards, setCards] = useState<CardInfos[]>(props.displayCard ? [props.displayCard] : []);
 
     useImperativeHandle(ref, () => ({
         isEmpty: () => cards.length === 0
     }), [cards])
-
-    function isFace(card: CardInfos): boolean {
-        return card.number === cardNumbers.JACK
-            || card.number === cardNumbers.QUEEN
-            || card.number === cardNumbers.KING
-            || card.number === cardNumbers.BLACK
-            || card.number === cardNumbers.WHITE;
-    }
 
     function sameCardNumber(topCard: CardInfos, newCard: CardInfos) {
         return topCard.number === newCard.number
@@ -47,7 +40,7 @@ const Pillow = forwardRef<PillowHandle, PillowProps>((props, ref) => {
         const cardReceived = props.cardReceived();
         if (!cardReceived) return;
         console.log(cardReceived);
-        if (isFace(cardReceived)) {
+        if (isFace(cardReceived.number)) {
             setCards(prevCards => prevCards.slice(2))
         } else {
             if (cards.length === 0) {

@@ -35,3 +35,11 @@ export function getCardNumber(number:string) {
         default : return cardNumbers.BLACK
     }
 }
+
+export function isFace(card: string): boolean {
+    return card === cardNumbers.JACK
+        || card === cardNumbers.QUEEN
+        || card === cardNumbers.KING
+        || card === cardNumbers.BLACK
+        || card === cardNumbers.WHITE;
+}
