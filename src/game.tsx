@@ -50,11 +50,13 @@ function Game() {
     function removePillow(): void {
         if (pillowIds.length <= 1) return;
 
-        const emptyId = pillowIds.find(id => pillowRefs.current.get(id)?.isEmpty());
+        const removableIds = pillowIds.slice(1);
+        const emptyId = removableIds.find(id => pillowRefs.current.get(id)?.isEmpty());
         if (!emptyId) return;
+        const idToRemove = emptyId ?? removableIds[removableIds.length - 1];
 
-        setPillowIds(prev => prev.filter(id => id !== emptyId));
-        pillowRefs.current.delete(emptyId);
+        setPillowIds(prev => prev.filter(id => id !== idToRemove));
+        pillowRefs.current.delete(idToRemove);
     }
 
     return (

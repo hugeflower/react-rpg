@@ -1,5 +1,6 @@
 const fr = {
   tutorial: {
+    firstStepTitle: "L'espace infranchissable de notre dernière nuit",
     firstStep: [
       "« L'espace infranchissable de notre dernière nuit » est un jeu de rôle sur table pour une à quatre personnes, où les joueurs prendront le rôle d'un couple durant ce qui pourrait bien être leur dernière nuit ensemble.",
       "Entre eux dans le lit se dresse une frontière physique : une muraille d'oreillers disposée pour séparer les deux corps.",
@@ -7,6 +8,7 @@ const fr = {
       "À la suite d'un élément déclencheur, les amoureux passeront la nuit à ressasser divers moments de leur relation, pour le meilleur et pour le pire.",
       "À la fin de la nuit, ils devront prendre action et décider : continuer leur chemin ensemble, ou tout arrêter?",
     ].join(" "),
+    secondStepTitle:"Phase 1: La chambre",
     secondStep: [
       "Décrivez à tour de rôle un élément évocateur qui est présent dans la chambre du couple, et qui aidera à définir votre personnage, ou le couple.",
       "Par exemple, une cravate au sol pourrait indiquer qu'un des personnages est un professionnel, tandis qu'un moniteur de bébé pourrait indiquer qu'il s'agit de jeunes parents.",
@@ -14,6 +16,7 @@ const fr = {
       "Comme il s'agit d'un jeu qui traite de relations personnelles et qui peut soulever des thèmes potentiellement sensibles, voici le moment de mettre en place vos outils de sécurité préférés : carte X, « lines and veils », etc.",
       "Nommez vos personnages. Ils ne sont pas la propriété d'un joueur en particulier : tous pourront incarner l'un, l'autre, ou un PNJ, selon leurs envies, et changer d'une scène à l'autre.",
     ].join(" "),
+    thirdStepTitle:"Phase 2: La soirée",
     thirdStep1: [
       "Quelque chose s'est passé ce soir entre vos deux personnages.",
       "Un événement banal ou une grosse dispute, un mot de trop ou l'absence d'action.",
@@ -27,8 +30,9 @@ const fr = {
         "Un « oreiller » est le terme utilisé dans le jeu pour désigner à la fois l’objet physique, et comme",
         "métaphore pour une situation conflictuelle, sujet sensible, ou tout autre élément qui crée de la distance entre les deux personnages.",
     ].join(" "),
+    fourthStepTitle:"Phase 2: La soirée - consultation des éléments d'inspiration",
     fourthStep1: [
-        "Consultez le tableau des éléments d’inspiration (survolez l'icône de livre pour le voir) selon la carte pigée, et choisissez-en",
+        "Consultez le tableau des éléments d’inspiration dans les règles  selon la carte pigée (survolez n'importe quelle carte plus de une seconde dans cette version pour les voir), et choisissez-en",
         "un pour définir votre élément déclencheur.\n Voici l'entrée correspondant à cette carte:\n\n",
     ].join(" "),
     fourthStep2: [

@@ -3,13 +3,15 @@ import cardPromptsFr from "../translation/locales/fr/cardPrompts.fr.ts";
 import cardPromptsEn from "../translation/locales/en/cardPrompts.en.ts";
 
 interface CardPromptsProps {
-    cardNumber: string;
+    cardNumber?: string;
 }
 
 function CardPrompts(props: CardPromptsProps) {
     const { i18n } = useTranslation();
 
-    const prompts = (i18n.language.startsWith("fr") ? cardPromptsFr : cardPromptsEn)[props.cardNumber] ?? [];
+    if (!props.cardNumber) return null;
+
+    const prompts: string[] = (i18n.language.startsWith("fr") ? cardPromptsFr : cardPromptsEn)[props.cardNumber] ?? [];
 
     return (
         <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
