@@ -3,7 +3,7 @@ import {useState} from "react";
 import TutorialStep from "./TutorialStep.tsx";
 import {useTranslation} from "react-i18next";
 import type {CardInfos} from "../Types/cardInfos.tsx";
-import Pillow from "../pillow.tsx";
+import Pillow from "../BaseComponents/Pillow.tsx";
 import CardPrompts from "../BaseComponents/CardPrompts.tsx";
 import Card from "../BaseComponents/Card.tsx";
 

@@ -1,5 +1,5 @@
 import {useRef, useState} from "react"
-import Pillow, {type PillowHandle} from "./pillow.tsx";
+import Pillow, {type PillowHandle} from "./BaseComponents/Pillow.tsx";
 import {newDeck} from "./CardItems/cardCollection.tsx";
 import type {CardInfos} from "./Types/cardInfos.tsx";
 import Deck from "./CardItems/deck.tsx";
@@ -47,16 +47,9 @@ function Game() {
         setPillowIds(prev => [...prev, crypto.randomUUID()]);
     }
 
-    function removePillow(): void {
-        if (pillowIds.length <= 1) return;
-
-        const removableIds = pillowIds.slice(1);
-        const emptyId = removableIds.find(id => pillowRefs.current.get(id)?.isEmpty());
-        if (!emptyId) return;
-        const idToRemove = emptyId ?? removableIds[removableIds.length - 1];
-
-        setPillowIds(prev => prev.filter(id => id !== idToRemove));
-        pillowRefs.current.delete(idToRemove);
+    function removePillowById(id: string): void {
+        setPillowIds(prev => prev.filter(pid => pid !== id));
+        pillowRefs.current.delete(id);
     }
 
     return (
@@ -95,7 +88,6 @@ function Game() {
                     }} hidden={false} draggable={true}/>
                 </div>
                 <button onClick={addPillow}>{t('sideButtons.addPillow')}</button>
-                <button onClick={removePillow}>{t('sideButtons.removePillow')}</button>
             </div>
             <div style={{position: "relative", zIndex: 1, paddingTop: "300px", marginLeft: "200px"}}>
                 <div
@@ -107,7 +99,7 @@ function Game() {
                         maxHeight: "700px",
                     }}
                 >
-                    {pillowIds.map((id) => (
+                    {pillowIds.map((id, index) => (
                         <Pillow
                             key={id}
                             ref={(el) => {
@@ -116,6 +108,7 @@ function Game() {
                             }}
                             cardReceived={takeFirstCardFromDiscard}
                             returnCard={returnCardToDiscard}
+                            onEmptied={index === 0 ? undefined : () => removePillowById(id)}
                         />
                     ))}
                 </div>

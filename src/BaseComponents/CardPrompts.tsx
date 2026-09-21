@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
-import cardPromptsFr from "../translation/locales/fr/cardPrompts.fr.ts";
-import cardPromptsEn from "../translation/locales/en/cardPrompts.en.ts";
+import {getCardPrompts} from "../translation/locales/getCardPrompts.ts";
 
 interface CardPromptsProps {
     cardNumber?: string;
@@ -11,7 +10,7 @@ function CardPrompts(props: CardPromptsProps) {
 
     if (!props.cardNumber) return null;
 
-    const prompts: string[] = (i18n.language.startsWith("fr") ? cardPromptsFr : cardPromptsEn)[props.cardNumber] ?? [];
+    const prompts: string[] = getCardPrompts(props.cardNumber, i18n.language);
 
     return (
         <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
