@@ -21,7 +21,7 @@ function Game() {
         const [card] = fullDeck.splice(index, 1)
         return {deck: fullDeck, firstCard: card}
     })
-    const [discard, setDiscard] = useState<CardInfos[]>([])
+    // const [discard, setDiscard] = useState<CardInfos[]>([])
     const [activeCard, setActiveCard] = useState<CardInfos | null>(null)
     const [pendingChoice, setPendingChoice] = useState<CardInfos[] | null>(null)
     const [pillowIds, setPillowIds] = useState<string[]>(() => [crypto.randomUUID()])
@@ -49,9 +49,9 @@ function Game() {
 
     function chooseActiveCard(chosen: CardInfos): void {
         if (!pendingChoice) return
-        const rejected = pendingChoice.find(card => card !== chosen)!
+        // const rejected = pendingChoice.find(card => card !== chosen)!
         setActiveCard(chosen)
-        if (rejected) setDiscard(prev => [rejected, ...prev])
+        // if (rejected) setDiscard(prev => [rejected, ...prev])
         setPendingChoice(null)
     }
 
