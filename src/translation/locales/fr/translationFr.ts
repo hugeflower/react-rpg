@@ -43,6 +43,14 @@ const fr = {
     nextButton: "Suivant",
     closeButton: "Fermer",
   },
+  playerSetup: {
+    title: "Commencez par écrire le nom des deux joueurs",
+    player1Label: "Premier joueur",
+    player2Label: "Deuxième joueur",
+    startButton: "Commencez L’espace infranchissable de notre dernière nuit"
+  },
+  drawChoice: { firstTurn: "Votre première carte", chooseOne: "Choisissez une carte" },
+  turn: { label: "Tour {{number}} : c'est au tour de {{name}}" },
   sideButtons: {
     addPillow: "Ajouter un oreiller",
     removePillow: "Enlever un oreiller",

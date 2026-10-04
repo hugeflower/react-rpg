@@ -9,6 +9,7 @@ import Card from "../BaseComponents/Card.tsx";
 
 interface TutorialDialogsProps {
     card: CardInfos
+    onFinish?: () => void
 }
 
 function TutorialDialogs(props: TutorialDialogsProps) {
@@ -87,7 +88,7 @@ function TutorialDialogs(props: TutorialDialogsProps) {
                     {t('tutorial.fourthStep2')}
                 </DialogContentText>
                 <DialogActions>
-                    <Button onClick={() => setTutorialStep(TutorialStep.fifthStep)}>{t('tutorial.closeButton')}</Button>
+                    <Button onClick={() => {setTutorialStep(TutorialStep.fifthStep); props.onFinish?.() }}>{t('tutorial.closeButton')}</Button>
                 </DialogActions>
             </div>
         </Dialog>

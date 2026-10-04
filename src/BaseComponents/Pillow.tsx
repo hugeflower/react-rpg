@@ -12,6 +12,7 @@ interface PillowProps {
     returnCard: (cardInfos: CardInfos) => void
     displayCard?: CardInfos
     onEmptied?: () => void
+    onCardPlayed?: () => void
 }
 
 export interface PillowHandle {
@@ -54,6 +55,7 @@ const Pillow = forwardRef<PillowHandle, PillowProps>((props, ref) => {
                 }
                 return remainingCards;
             });
+            props.onCardPlayed?.();
         } else {
             if (cards.length === 0) {
                 setCards([cardReceived])
@@ -61,6 +63,7 @@ const Pillow = forwardRef<PillowHandle, PillowProps>((props, ref) => {
                 return
             } else if (validCardChain(cards.at(0) as CardInfos, cardReceived)) {
                 setCards(prevCards => [cardReceived, ...prevCards])
+                props.onCardPlayed?.()
                 return
             } else console.info("Invalid card");
             props.returnCard(cardReceived);
@@ -70,6 +73,7 @@ const Pillow = forwardRef<PillowHandle, PillowProps>((props, ref) => {
     function handlePromptSelected(prompt: string): void {
         setSelectedPrompt(prompt);
         setPendingCard(null);
+        props.onCardPlayed?.();
     }
 
     const [, drop] = useDrop(() => ({

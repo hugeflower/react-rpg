@@ -8,7 +8,7 @@ interface HoverPromptProps {
 
 function HoverPrompt({ content, children }: HoverPromptProps) {
     const [visible, setVisible] = useState(false);
-    const [position, setPosition] = useState({ top: 0, left: 0 });
+    const [position, setPosition] = useState({ top: 0, left: 0, below: false });
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const anchorRef = useRef<HTMLDivElement>(null);
 
@@ -22,9 +22,11 @@ function HoverPrompt({ content, children }: HoverPromptProps) {
     function updatePosition() {
         const rect = anchorRef.current?.getBoundingClientRect();
         if (!rect) return;
+        const below = rect.top < 220;
         setPosition({
-            top: rect.top - 8,
+            top: below ? rect.bottom + 8 : rect.top - 8,
             left: rect.left + rect.width / 2,
+            below,
         });
     }
 
