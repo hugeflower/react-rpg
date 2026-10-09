@@ -49,8 +49,10 @@ const fr = {
     player2Label: "Deuxième joueur",
     startButton: "Commencez L’espace infranchissable de notre dernière nuit"
   },
-  drawChoice: { firstTurn: "Votre première carte", chooseOne: "Choisissez une carte" },
-  turn: { label: "Tour {{number}} : c'est au tour de {{name}}" },
+  drawChoice: { firstTurn: "Votre première carte : glissez-la sur l'oreiller", chooseOne: "Choisissez une carte et glissez-la sur un oreiller" },
+  turn: {
+    phase2: "Phase 2 : La soirée",
+    label: "Tour {{number}} : c'est au tour de {{name}}" },
   sideButtons: {
     addPillow: "Ajouter un oreiller",
     removePillow: "Enlever un oreiller",

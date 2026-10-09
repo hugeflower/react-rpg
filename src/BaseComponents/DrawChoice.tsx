@@ -4,10 +4,9 @@ import type {CardInfos} from "../Types/cardInfos.tsx";
 
 interface DrawChoiceProps {
     cards: CardInfos[];
-    onChoose: (card: CardInfos) => void;
 }
 
-function DrawChoice({cards, onChoose}: DrawChoiceProps) {
+function DrawChoice({cards}: DrawChoiceProps) {
     const {t} = useTranslation();
     const isFirstTurn = cards.length === 1;
 
@@ -17,10 +16,8 @@ function DrawChoice({cards, onChoose}: DrawChoiceProps) {
                 {isFirstTurn ? t('drawChoice.firstTurn') : t('drawChoice.chooseOne')}
             </div>
             <div style={{display: "flex", gap: "1rem"}}>
-                {cards.map((card, index) => (
-                    <div key={index} onClick={() => onChoose(card)} style={{cursor: "pointer"}}>
-                        <Card card={card} draggable={false}/>
-                    </div>
+                {cards.map((card) => (
+                    <Card card={card} draggable={true}/>
                 ))}
             </div>
         </div>

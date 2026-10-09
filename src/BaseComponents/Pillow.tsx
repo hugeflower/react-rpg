@@ -8,7 +8,7 @@ import {componentType} from "../Types/cardType.tsx";
 import PromptPicker from "./PromptPicker.tsx";
 
 interface PillowProps {
-    cardReceived: () => CardInfos | null
+    cardReceived: (card: CardInfos) => CardInfos | null
     returnCard: (cardInfos: CardInfos) => void
     displayCard?: CardInfos
     onEmptied?: () => void
@@ -41,8 +41,8 @@ const Pillow = forwardRef<PillowHandle, PillowProps>((props, ref) => {
         return sameCardNumber(topCard, newCard) || sameCardSuite(topCard, newCard);
     }
 
-    function receiveCard() {
-        const cardReceived = props.cardReceived();
+    function receiveCard(card: CardInfos) {
+        const cardReceived = props.cardReceived(card);
         if (!cardReceived) return;
         console.log(cardReceived);
         if (isFace(cardReceived.number)) {
@@ -78,12 +78,12 @@ const Pillow = forwardRef<PillowHandle, PillowProps>((props, ref) => {
 
     const [, drop] = useDrop(() => ({
             accept: componentType.CARD,
-            drop: () => receiveCard(),
+            drop: (card: CardInfos) => receiveCard(card),
             collect: (monitor) => ({
                 isOver: monitor.isOver()
             })
         }),
-        [cards, props.cardReceived]
+        [cards, props.cardReceived, props.returnCard]
     )
 
     drop(cardRef)
@@ -120,8 +120,8 @@ const Pillow = forwardRef<PillowHandle, PillowProps>((props, ref) => {
                 <div style={{
                     position: "absolute",
                     top: "0px",
-                    left: "25px",
-                    width: "150px",
+                    left: "0px",
+                    width: "100%",
                     height: "200px",
                     background: "rgba(20, 14, 8, 0.82)",
                     borderRadius: "8px",

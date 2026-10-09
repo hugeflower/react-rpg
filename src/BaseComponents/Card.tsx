@@ -5,6 +5,8 @@ import { useDrag } from "react-dnd";
 import type {CardInfos} from "../Types/cardInfos.tsx";
 import HoverPrompt from "./HoverPrompt.tsx";
 import CardPrompts from "./CardPrompts.tsx";
+import {useEffect} from "react";
+import {getEmptyImage} from "react-dnd-html5-backend";
 
 interface CardProps {
     card: CardInfos;
@@ -21,15 +23,16 @@ function Card({card, draggable}: CardProps) {
         })
     }), [card])
 
+    useEffect(() => {
+        preview(getEmptyImage(), {captureDraggingState: true})
+    }, [preview])
+
     const cardColor = (card.suite === cardSuites.HEARTS || card.suite === cardSuites.DIAMONDS) ? "red" : "black"
     const cardToShow = getCardFromValues(card)
     return (
         <HoverPrompt content={<CardPrompts cardNumber={card.number}/> }>
             <div
-                ref={node => {
-                    drag(node)
-                    preview(node)
-                }}
+                ref={node => { drag(node) }}
                 style={{
                     color : cardColor,
                     fontSize : "8rem",

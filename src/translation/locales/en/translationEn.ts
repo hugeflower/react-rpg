@@ -48,8 +48,10 @@ const en = {
     player2Label: "Second player",
     startButton: "Begin The Uncrossable Space of Our Last Night",
   },
-  drawChoice: { firstTurn: "Your first card", chooseOne: "Choose a card" },
-  turn: { label: "Turn {{number}}: {{name}}'s turn" },
+  drawChoice: { firstTurn: "Your first card: drag it onto the pillow", chooseOne: "Choose a card and drag it onto a pillow" },
+  turn: {
+    phase2: "Phase 2: The evening",
+    label: "Turn {{number}}: {{name}}'s turn" },
   sideButtons: {
     addPillow: "Add a Pillow",
     removePillow: "Remove a Pillow",

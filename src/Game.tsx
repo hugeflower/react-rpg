@@ -10,8 +10,11 @@ import {useTranslation} from "react-i18next";
 import LanguageToggle from "./translation/TranslationComponents/LanguageToggle.tsx";
 import PlayerNamesDialog from "./TutorialComponents/PlayerNamesDialog.tsx";
 import DrawChoice from "./BaseComponents/DrawChoice.tsx";
+import CardDragLayer from "./BaseComponents/CardDragLayer.tsx";
+import PhaseDialog from "./TutorialComponents/PhaseDialog.tsx";
 
 function Game() {
+    const PHASE_4_START_TURN = 21
     const [{deck, firstCard}] = useState<{deck: CardInfos[], firstCard: CardInfos}>(() => {
         const fullDeck = newDeck()
         let index = Math.floor(Math.random() * fullDeck.length)
@@ -22,7 +25,6 @@ function Game() {
         return {deck: fullDeck, firstCard: card}
     })
     // const [discard, setDiscard] = useState<CardInfos[]>([])
-    const [activeCard, setActiveCard] = useState<CardInfos | null>(null)
     const [pendingChoice, setPendingChoice] = useState<CardInfos[] | null>(null)
     const [pillowIds, setPillowIds] = useState<string[]>(() => [crypto.randomUUID()])
     const pillowRefs = useRef(new Map<string, PillowHandle>())
@@ -30,40 +32,46 @@ function Game() {
     const [players, setPlayers] = useState<[string, string] | null>(null)
     const [turnCount, setTurnCount] = useState(0)
     const currentPlayerIndex = turnCount % 2
+    const phase = turnCount === 0 ? 2 : turnCount < PHASE_4_START_TURN ? 3 : 4
+    const [phaseDialogOpen, setPhaseDialogOpen] = useState(false)
     const { t } = useTranslation()
 
     useEffect(() => {
-        if (!players) return
-        drawTwoCards()
-    }, [players, tutorialDone, currentPlayerIndex])
+        if (turnCount === PHASE_4_START_TURN) setPhaseDialogOpen(true)
+    }, [turnCount])
 
-    function drawTwoCards(): void {
-        if (activeCard || pendingChoice) return
+    useEffect(() => {
+        if (!players || !tutorialDone || phaseDialogOpen) return
+        startTurn()
+    }, [players, tutorialDone, turnCount, phaseDialogOpen])
+
+    function startTurn(): void {
+        if (pendingChoice) return
+        if (turnCount === 0) {
+            setPendingChoice([firstCard])
+            return
+        }
         if (deck.length < 2) return
         const firstIndex = Math.floor(Math.random() * deck.length)
-        const [firstCard] = deck.splice(firstIndex, 1)
+        const [card1] = deck.splice(firstIndex, 1)
         const secondIndex = Math.floor(Math.random() * deck.length)
-        const [secondCard] = deck.splice(secondIndex, 1)
-        setPendingChoice([firstCard, secondCard])
+        const [card2] = deck.splice(secondIndex, 1)
+        setPendingChoice([card1, card2])
     }
 
-    function chooseActiveCard(chosen: CardInfos): void {
-        if (!pendingChoice) return
-        // const rejected = pendingChoice.find(card => card !== chosen)!
-        setActiveCard(chosen)
-        // if (rejected) setDiscard(prev => [rejected, ...prev])
+    const choiceBackup = useRef<CardInfos[] | null>(null)
+
+    function takeDraggedCard(card: CardInfos): CardInfos | null {
+        if (!pendingChoice) return null
+        const chosen = pendingChoice.find(c => c.suite === card.suite && c.number === card.number)
+        if (!chosen) return null
+        choiceBackup.current = pendingChoice
         setPendingChoice(null)
+        return chosen
     }
 
-    function takeActiveCard(): CardInfos | null {
-        if (!activeCard) return null
-        const card = activeCard
-        setActiveCard(null)
-        return card
-    }
-
-    function returnActiveCard(card: CardInfos): void {
-        setActiveCard(card)
+    function returnDraggedCard(): void {
+        setPendingChoice(choiceBackup.current)
     }
 
     function advanceTurn(): void {
@@ -88,6 +96,13 @@ function Game() {
             overflow: "hidden"}}>
             <PlayerNamesDialog open={!players} onConfirm={(p1, p2) => setPlayers([p1, p2])}/>
             {players && <TutorialDialogs card={firstCard} onFinish={() => setTutorialDone(true)}/>}
+            <PhaseDialog
+                open={phaseDialogOpen}
+                title={t('phase4.title')}
+                buttonLabel={t('tutorial.closeButton')}
+                onClose={() => setPhaseDialogOpen(false)}>
+                {t('phase4.text')}
+            </PhaseDialog>
             <LanguageToggle/>
             <img
                 style={{
@@ -105,12 +120,14 @@ function Game() {
             <div style={{position: "absolute", left: "10px", width: "18%", zIndex: 2}}>
                 {players && (
                     <div style={{marginBottom: "10px", fontWeight: 700}}>
-                        {t('turn.label', {number: turnCount + 1, name: players[currentPlayerIndex]})}
+                        {currentPlayerIndex === null
+                        ? t('turn.phase2')
+                        : t('turn.label', {number: turnCount, name: players[currentPlayerIndex]})
+                        }
                     </div>
                 )}
                 <div style={{marginBottom: "20px"}}>
                     <Deck cards={deck} onClick={() => {}} hidden={true} draggable={false}/>
-                    <Deck cards={activeCard ? [activeCard] : []} onClick={() => {}} hidden={false} draggable={true}/>
                 </div>
                 <button onClick={addPillow}>{t('sideButtons.addPillow')}</button>
             </div>
@@ -132,10 +149,11 @@ function Game() {
                         border: "1.5px dashed #b08d57",
                         borderRadius: "12px",
                     }}>
-                        <DrawChoice cards={pendingChoice} onChoose={chooseActiveCard}/>
+                        <DrawChoice cards={pendingChoice} />
                     </div>
                 </div>
             )}
+            <CardDragLayer/>
             <div style={{position: "relative", zIndex: 1, paddingTop: "300px", marginLeft: "200px"}}>
                 <div
                     style={{
@@ -153,8 +171,8 @@ function Game() {
                                 if (el) pillowRefs.current.set(id, el);
                                 else pillowRefs.current.delete(id);
                             }}
-                            cardReceived={takeActiveCard}
-                            returnCard={returnActiveCard}
+                            cardReceived={takeDraggedCard}
+                            returnCard={returnDraggedCard}
                             onEmptied={index === 0 ? undefined : () => removePillowById(id)}
                             onCardPlayed={advanceTurn}
                         />
